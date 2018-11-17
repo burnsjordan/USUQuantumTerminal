@@ -49,7 +49,30 @@ def performMeasurement(V):
     print("|"+bin(measured)[2:].zfill(realNum)+">")
     
     
-
+def performMeasurement2(V):
+    print('Measuring Quantum State')
+    time.sleep(2)
+    P = V
+    numOfBits = len(P)
+    realNum = int(np.log2(numOfBits))
+    #print(realNum)
+    for i in range(numOfBits):
+        P[i] = abs(V[i])**2
+    
+    found = False
+    R = random.uniform(0, 1)
+    measured = -1
+    total = 0
+    for i in range(numOfBits):
+        total += P[i]
+        if R <= total and found == False:
+            found = True
+            measured = i
+            
+    print("|"+bin(measured)[2:].zfill(realNum)+">")
+    return (bin(measured)[2:].zfill(realNum))
+    
+ 
 
 def GroverOnTwo():
     
@@ -307,7 +330,7 @@ def Shor(N,error=0.5):
         x = gcd(i,N)
         if (x == 1):
             x = i
-            s = performMeasurement(QuantumShor(N,x,t,L))
+            s = performMeasurement2(QuantumShor(N,x,t,L))
             sr = 0
             for k in range(len(s)):
                 if (int(s[k]) == 1):
